@@ -56,6 +56,10 @@ app.get('/health', (req, res) => {
 // API routes
 app.use('/api', routes);
 
+// Admin routes
+const adminRoutes = require('./routes/admin');
+app.use('/admin', adminRoutes);
+
 // Backward compatibility routes (without /api prefix)
 app.use('/', routes);
 

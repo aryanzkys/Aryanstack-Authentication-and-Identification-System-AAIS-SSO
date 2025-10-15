@@ -14,6 +14,7 @@ CREATE TABLE users (
   first_name VARCHAR(100),
   last_name VARCHAR(100),
   role VARCHAR(50) DEFAULT 'user',
+  is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -40,7 +41,49 @@ CREATE INDEX idx_refresh_tokens_user_id ON refresh_tokens(user_id);
 CREATE INDEX idx_refresh_tokens_token ON refresh_tokens(token);
 ```
 
-### 3. oauth_clients table (Optional)
+### 3. applications table
+
+```sql
+CREATE TABLE applications (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  client_id VARCHAR(255) UNIQUE NOT NULL,
+  client_secret VARCHAR(255) NOT NULL,
+  redirect_uris TEXT[],
+  scopes TEXT[],
+  created_by UUID REFERENCES users(id) ON DELETE SET NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  is_active BOOLEAN DEFAULT true
+);
+
+-- Create indexes
+CREATE INDEX idx_applications_client_id ON applications(client_id);
+CREATE INDEX idx_applications_created_by ON applications(created_by);
+```
+
+### 4. api_keys table
+
+```sql
+CREATE TABLE api_keys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(255) NOT NULL,
+  key VARCHAR(255) UNIQUE NOT NULL,
+  application_id UUID REFERENCES applications(id) ON DELETE CASCADE,
+  expires_at TIMESTAMP WITH TIME ZONE,
+  created_by UUID REFERENCES users(id) ON DELETE SET NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  is_active BOOLEAN DEFAULT true,
+  last_used_at TIMESTAMP WITH TIME ZONE
+);
+
+-- Create indexes
+CREATE INDEX idx_api_keys_key ON api_keys(key);
+CREATE INDEX idx_api_keys_application_id ON api_keys(application_id);
+```
+
+### 5. oauth_clients table (Optional)
 
 ```sql
 CREATE TABLE oauth_clients (
