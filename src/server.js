@@ -69,7 +69,7 @@ app.use(notFoundHandler);
 // Error handler
 app.use(errorHandler);
 
-// Initialize OAuth2 client and start server
+// Initialize OAuth2 client and start server (only for local development)
 const startServer = async () => {
   try {
     // Ensure OAuth2 client is registered in Hydra
@@ -101,7 +101,9 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(1);
 });
 
-// Start the server
-startServer();
+// Start the server only if not running in serverless environment
+if (require.main === module) {
+  startServer();
+}
 
 module.exports = app;

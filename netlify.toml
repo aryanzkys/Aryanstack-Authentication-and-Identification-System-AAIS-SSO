@@ -1,7 +1,7 @@
 [build]
-  command = "npm install"
+  command = "npm install && npm run build"
   functions = "netlify/functions"
-  publish = "."
+  publish = "public"
 
 [build.environment]
   NODE_VERSION = "18"
@@ -13,12 +13,37 @@
 
 [[redirects]]
   from = "/admin/*"
-  to = "/.netlify/functions/api/admin/:splat"
+  to = "/.netlify/functions/api/:splat"
   status = 200
 
 [[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/api/:splat"
+  from = "/health"
+  to = "/.netlify/functions/api/health"
+  status = 200
+
+[[redirects]]
+  from = "/signup"
+  to = "/.netlify/functions/api/signup"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/.netlify/functions/api/login"
+  status = 200
+
+[[redirects]]
+  from = "/callback"
+  to = "/.netlify/functions/api/callback"
+  status = 200
+
+[[redirects]]
+  from = "/profile"
+  to = "/.netlify/functions/api/profile"
+  status = 200
+
+[[redirects]]
+  from = "/logout"
+  to = "/.netlify/functions/api/logout"
   status = 200
 
 [functions]

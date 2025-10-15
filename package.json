@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
+    "build": "echo 'Building for Netlify Functions...' && mkdir -p public && echo 'AAIS Auth Server is running via Netlify Functions' > public/index.html",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
