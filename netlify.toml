@@ -1,0 +1,57 @@
+[build]
+  command = "npm install && npm run build"
+  functions = "netlify/functions"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/api/health"
+  status = 200
+
+[[redirects]]
+  from = "/signup"
+  to = "/.netlify/functions/api/signup"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/.netlify/functions/api/login"
+  status = 200
+
+[[redirects]]
+  from = "/callback"
+  to = "/.netlify/functions/api/callback"
+  status = 200
+
+[[redirects]]
+  from = "/profile"
+  to = "/.netlify/functions/api/profile"
+  status = 200
+
+[[redirects]]
+  from = "/logout"
+  to = "/.netlify/functions/api/logout"
+  status = 200
+
+[functions]
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://login.aryanstack.netlify.app, https://panel.aryanstack.netlify.app"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
