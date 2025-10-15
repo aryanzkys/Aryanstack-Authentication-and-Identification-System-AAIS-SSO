@@ -1,9 +1,10 @@
-# Aryanstack Authentication and Identification System (AAIS) SSO
+# Aryanstack-Authentication-and-Identification-System-AAIS-SSO
 
-A comprehensive Single Sign-On (SSO) system built with Node.js, Express, Ory Hydra (OAuth2/OpenID Connect), and Supabase (PostgreSQL) that provides unified authentication for all Aryanstack websites.
+A comprehensive Single Sign-On (SSO) authentication system for Aryanstack websites using Node.js, Express, Ory Hydra (OAuth2/OpenID Connect), and Supabase (PostgreSQL) with a modern admin management panel.
 
-## 🚀 Features
+## 🎉 Features
 
+### SSO Backend
 - **Complete OAuth2/OpenID Connect integration** with Ory Hydra
 - **User management** with Supabase PostgreSQL
 - **JWT-based authentication** with access and refresh tokens
@@ -11,22 +12,66 @@ A comprehensive Single Sign-On (SSO) system built with Node.js, Express, Ory Hyd
 - **Token validation middleware** for protected routes
 - **Session management** with refresh token storage
 - **RESTful API** with comprehensive error handling
+- **Rate limiting** for security
 - **Postman collection** for easy API testing
-- **Security best practices** with Helmet, CORS, and secure session handling
+
+### Admin Management Panel (NEW)
+- **Modern Next.js dashboard** with TypeScript and Tailwind CSS
+- **User management**: View, edit, delete users and manage roles
+- **Application management**: Register OAuth2 apps with client credentials
+- **API key management**: Generate and manage secure API tokens
+- **Hydra client management**: CRUD operations for OAuth2 clients
+- **Real-time statistics**: Dashboard with system metrics
+- **Role-based access control**: Admin, developer, and viewer roles
 
 ## 📋 Table of Contents
 
-- [Requirements](#requirements)
+- [Architecture](#architecture)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Database Setup](#database-setup)
 - [Running the Application](#running-the-application)
+- [Admin Panel](#admin-panel)
 - [API Endpoints](#api-endpoints)
 - [Project Structure](#project-structure)
-- [Testing with Postman](#testing-with-postman)
 - [Security](#security)
 - [Contributing](#contributing)
 - [License](#license)
+
+## 🏗️ Architecture
+
+The system consists of two main components:
+
+1. **SSO Backend** (Node.js + Express)
+   - Authentication and authorization endpoints
+   - OAuth2/OpenID Connect integration with Ory Hydra
+   - User data storage in Supabase
+   - Admin API endpoints
+
+2. **Admin Panel** (Next.js + TypeScript)
+   - Web-based management interface
+   - User and application management
+   - API key generation
+   - System monitoring and statistics
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     AAIS SSO System                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌──────────────────┐         ┌──────────────────┐         │
+│  │   Admin Panel    │◄────────┤   SSO Backend    │         │
+│  │  (Next.js App)   │         │ (Express Server) │         │
+│  └──────────────────┘         └────────┬─────────┘         │
+│                                        │                    │
+│                          ┌─────────────┼─────────────┐      │
+│                          │             │             │      │
+│                    ┌─────▼─────┐ ┌────▼────┐ ┌─────▼─────┐│
+│                    │  Supabase │ │  Hydra  │ │  Client   ││
+│                    │(PostgreSQL)│ │(OAuth2) │ │   Apps    ││
+│                    └───────────┘ └─────────┘ └───────────┘│
+└─────────────────────────────────────────────────────────────┘
+```
 
 ## 🛠️ Requirements
 
@@ -153,6 +198,39 @@ npm start
 ```
 
 The server will start on `http://localhost:3000` (or the port specified in `.env`)
+
+## 🎨 Admin Panel
+
+The Admin Management Panel provides a web interface to manage the SSO system.
+
+### Quick Start
+
+```bash
+cd admin-panel
+npm install
+cp .env.example .env
+# Edit .env with your configuration
+npm run dev
+```
+
+The admin panel will start on `http://localhost:3001`
+
+### Features
+
+- **Dashboard**: System statistics and metrics
+- **User Management**: View, edit, delete users; manage roles
+- **Application Management**: Register OAuth2 apps, generate client credentials
+- **API Key Management**: Generate and manage secure API tokens
+- **Hydra Client Management**: Manage OAuth2 clients in Ory Hydra
+- **Settings**: System configuration and security settings
+
+### Login
+
+1. Navigate to http://localhost:3001
+2. Login with admin credentials (must have admin or developer role)
+3. Access the dashboard
+
+For detailed admin panel documentation, see [admin-panel/README.md](admin-panel/README.md) and [admin-panel/DOCUMENTATION.md](admin-panel/DOCUMENTATION.md)
 
 ## 📡 API Endpoints
 
