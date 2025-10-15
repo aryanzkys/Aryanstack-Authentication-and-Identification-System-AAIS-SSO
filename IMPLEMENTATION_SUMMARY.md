@@ -104,6 +104,7 @@ Aryanstack-Authentication-and-Identification-System-AAIS-SSO/
 - **axios 1.6.2** - HTTP client (for Hydra API)
 - **morgan 1.10.0** - HTTP request logger
 - **dotenv 16.3.1** - Environment variables
+- **express-rate-limit 7.1.5** - Rate limiting (NEW)
 
 ### Development
 - **nodemon 3.0.2** - Auto-reload during development
@@ -166,7 +167,13 @@ All endpoints are also available under `/api` prefix for API versioning.
    - HTTP-only cookies in production
    - Secure session management
 
-4. **Error Handling**
+4. **Rate Limiting** (NEW)
+   - Authentication endpoints: 5 requests per 15 minutes
+   - API endpoints: 100 requests per 15 minutes
+   - Protection against DoS attacks
+   - Standard rate limit headers
+
+5. **Error Handling**
    - No sensitive data in error messages
    - Proper error status codes
    - Detailed logging without exposure
@@ -276,7 +283,7 @@ All requirements from the problem statement have been implemented:
 
 ## 📦 Dependencies Summary
 
-**Total Packages**: 200 (including sub-dependencies)
+**Total Packages**: 202 (including sub-dependencies)
 
 **Direct Dependencies**: 11
 - Express, Supabase client, JWT, bcrypt, axios, etc.
